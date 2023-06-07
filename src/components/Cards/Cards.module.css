@@ -1,0 +1,9 @@
+.containerCards{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    margin:auto;
+    background-color: rgba(161,250,84,0.3);
+    flex-wrap: wrap;
+}
