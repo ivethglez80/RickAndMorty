@@ -1,13 +1,15 @@
 import Cards from './components/Cards/Cards.jsx';
 import Nav from "./components/Nav/Nav.jsx"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import style from "./App.module.css"
 import axios from "axios";
-import { Routes,Route, useLocation, Navigate, useNavigate } from 'react-router-dom';
+import { Routes,Route, useLocation, useNavigate } from 'react-router-dom';
 import About from './components/About/About.jsx';
 import Detail from './components/Detail/Detail.jsx';
 import Form from './components/Form/Form.jsx';
-import { useEffect } from 'react';
+import Fav from './components/Favorites/Favorites.jsx';
+
+
 
 const userName = "mipass@mail.com";
 const Password = "mipass123";
@@ -44,9 +46,13 @@ function App() {
 
 
 
-   function onClose(id){
-         setCharacters((oldChars) => oldChars.filter((char) => char.id !== id));
-   }
+  //  function onClose(id){
+  //        setCharacters((oldChars) => oldChars.filter((char) => char.id !== id));
+  //  };
+
+   const onClose = (id) =>{
+    setCharacters(characters.filter((char)=>char.id !==id));
+   };
 
 
    function login(userData){
@@ -77,6 +83,10 @@ function App() {
       <Route
         path="/About"
         element={<About />}
+      />
+      <Route
+        path="/Fav"
+        element={<Fav />}
       />
       <Route
         path="/Detail/:detailId"

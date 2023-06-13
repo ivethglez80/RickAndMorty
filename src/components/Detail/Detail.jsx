@@ -1,39 +1,36 @@
-import axios from "axios";
+
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCharacterDetail,cleanDetail } from "../../redux/action";
+
 
 const Detail = () => {
   const { detailId } = useParams();
-  const [character, setCharacter] = useState(null);
+  const character = useSelector((state)=>state.getCharacterDetail);
+  const dispatch = useDispatch();
+  
 
   useEffect(() => {
-    axios(`https://rickandmortyapi.com/api/character/${detailId}`)
-      .then(({ data }) => {
-        if (data.name) {
-          setCharacter(data);
-        } 
-        else {
-          window.alert('No hay personajes con ese ID');
-        }
-      })
-      .catch(error => {
-        console.error(error);
-        window.alert('Ocurrió un error al obtener los datos');
-      });
+    dispatch(getCharacterDetail(detailId));
   }, [detailId]);
 
-  if (character === null) {
-    return <div>Cargando...</div>; // Mostrar un mensaje de carga mientras se obtienen los datos
-  }
+ 
 
   return (
     <div>
+      {character.name?(
+      <> 
       <h2>{character.name}</h2>
       <p>{character.status}</p>
       <p>{character.species}</p>
       <p>{character.gender}</p>
-      <p>{character.origin.name}</p>
+      <p>{character.origin?.name}</p>
       <img src={character.image} alt="img" />
+      </>
+  ):(
+    <h3>Loading...</h3>
+  )}
     </div>
   );
 };
